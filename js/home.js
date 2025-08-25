@@ -1,3 +1,5 @@
+const validPin = 12345;
+
 document
   .getElementById("btn-add-money")
   .addEventListener("click", function (event) {
@@ -9,9 +11,19 @@ document
     const amountAddNew = parseInt(amountAdd.value);
     const bankPinNumber = document.getElementById("bank-pin-number").value;
 
-    // console.log(bank, accountNumber, amountAdd, bankPinNumber);
+    // Is bank account numbers are 11 digit or not
+    if(accountNumber.length < 11){
+      alert("Please Provide Valid Account Number")
+      return;
+    }
 
-    //Total Available Balance
+    // Pin number is valid or not
+    if(bankPinNumber != validPin){
+      alert("Please Provide Valid Pin Number");
+      return;
+    }
+
+    // Total Available Balance
     const availableBalance = parseInt(
       document.getElementById("available-balance").innerText
     );
@@ -20,5 +32,5 @@ document
     amountAdd.value = '';
 
 
-    
+
   });
