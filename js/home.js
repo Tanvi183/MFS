@@ -86,15 +86,28 @@ document
 
 
 
-  
+
 // Toggling Feature
 function handleToggle(id1, id2) {
   document.getElementById(id1).addEventListener("click", function () {
+    // Hide all transaction forms
     const forms = document.getElementsByClassName("transaction-form");
     for (const form of forms) {
       form.style.display = "none";
     }
+    // Show the selected form
     document.getElementById(id2).style.display = "block";
+
+    // Reset all buttons to inactive style
+    const formBtns = document.getElementsByClassName("form-btn");
+    for(const btn of formBtns){
+      btn.classList.remove("border-[#0874f2]", "bg-[#0874f20d]");
+      btn.classList.add("border-gray-300");      
+    }
+    // Set the clicked button to active style
+    const activeBtn = document.getElementById(id1);
+    activeBtn.classList.remove("border-gray-300");
+    activeBtn.classList.add("border-[#0874f2]", "bg-[#0874f20d]");
   });
 }
 
