@@ -1,5 +1,7 @@
 const validPin = 1234;
 
+const transactionData = [];
+
 // function to get input value with converted
 function getInputValueNumber(id) {
   const inputField = parseInt(document.getElementById(id).value);
@@ -43,6 +45,12 @@ document
     const amountAdd = getInputValueNumber("amount-add");
     const bankPinNumber = getInputValueNumber("bank-pin-number");
 
+    // Alert For less than 0 amount
+    if(amountAdd <= 0){
+      alert("Invalid Amount")
+      return;
+    }
+
     // Is bank account numbers are 11 digit or not
     if (accountNumber.length < 11) {
       alert("Please Provide Valid Account Number");
@@ -64,7 +72,15 @@ document
 
     // Clear the input field
     cleanInputField("amount-add");
+
+    // History Store
+    const history = {
+      name: "Add Money",
+      date: new Date().toLocaleTimeString(),
+    };
+    transactionData.push(history);
   });
+
 
 
 // Money withdraw Feature
@@ -77,13 +93,27 @@ document
 
     const availableBalance = getInnerText("available-balance");
 
+    // withdraw amount not be heiger than available amount
+    if(amountWithdraw <= 0 || availableBalance <= amountWithdraw){
+      alert ("Invalid Amount");
+      return;
+    }
+
     const totalNewAvailableBalance = availableBalance - amountWithdraw;
 
     setInnerText(totalNewAvailableBalance);
 
     cleanInputField("amount-withdraw");
-  });
 
+    // History Store
+    const history = {
+      name: "Cash Out",
+      date: new Date().toLocaleTimeString(),
+    };
+
+    transactionData.push(history);
+    console.log(transactionData);
+  });
 
 
 
@@ -100,14 +130,41 @@ function handleToggle(id1, id2) {
 
     // Reset all buttons to inactive style
     const formBtns = document.getElementsByClassName("form-btn");
-    for(const btn of formBtns){
+    for (const btn of formBtns) {
       btn.classList.remove("border-[#0874f2]", "bg-[#0874f20d]");
-      btn.classList.add("border-gray-300");      
+      btn.classList.add("border-gray-300");
     }
     // Set the clicked button to active style
     const activeBtn = document.getElementById(id1);
     activeBtn.classList.remove("border-gray-300");
     activeBtn.classList.add("border-[#0874f2]", "bg-[#0874f20d]");
+
+    // only for transaction history show
+    if (id1 === "transactions-section") {
+      const transactionContainer = document.getElementById(
+        "transaction-container"
+      );
+      // Clear previous data
+      transactionContainer.innerHTML = ""; 
+      for (const data of transactionData) {
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <div class="bg-white rounded-xl p-3 mb-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-[#f4f5f7]">
+                    <img src="./assets/wallet1.png" class="mx-auto" alt="wallet">
+                </div>
+                <div class="ml-3">
+                    <h1>${data.name}</h1>
+                    <p>${data.date}</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </div>
+      `;
+      transactionContainer.appendChild(div);
+      }
+    }
   });
 }
 
@@ -117,8 +174,3 @@ handleToggle("transfer-money-section", "transfer-money-parent");
 handleToggle("get-bonus-section", "get-bonus-parent");
 handleToggle("pay-bill-section", "pay-bill-parent");
 handleToggle("transactions-section", "transaction-history-parent");
-
-
-
-
-

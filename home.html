@@ -75,7 +75,7 @@
     <div class="all-form-sections max-w-lg mx-auto p-6">
 
         <!-- add money -->
-        <div class="transaction-form" id="add-money-parent">
+        <div class="transaction-form" id="add-money-parent" style="display: none;">
             <h1 class="font-semibold text-lg mb-4">Add Money</h1>
             <form action="#" class="bg-white rounded-2xl p-6">
                 <div class="mb-3">
@@ -146,8 +146,14 @@
         </div>
 
         <!-- Transacations History -->
-        <div class="transaction-form" id="transaction-history-parent" style="display: none;">
-            <h1 class="font-semibold text-lg mb-4">Transactions</h1>
+        <div class="transaction-form" id="transaction-history-parent">
+            <div class="flex justify-between">
+                <h1 class="font-semibold text-lg mb-4">Transactions</h1>
+                <p class="text-[#08080880] text-sm cursor-pointer">View All</p>
+            </div>
+            <div id="transaction-container">
+                
+            </div>
         </div>
     </div>
     
